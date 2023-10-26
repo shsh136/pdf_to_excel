@@ -64,7 +64,7 @@ def App():
     with col1:
         department = st.selectbox(
             'Select Department',
-            ('IT', 'COMPUTER', 'AIDS', 'MECHANICAL', 'E&TC',
+            ('COMPUTER', 'IT', 'AIDS', 'MECHANICAL', 'E&TC',
                 'CIVIL', 'ELECTRICAL', 'INSTRUMENTATION')
         )
         st.success(f'Selected department is {department}')
