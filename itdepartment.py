@@ -302,7 +302,7 @@ def cleanMarks(text: str, subject_codes) -> dict:
             # max_lenght = 
             if len(temp) < 13:
                 while len(temp)!=13:
-                    temp.append('Error')
+                    temp.append('NA')
             
         
             d['subject'].append(temp[0])
