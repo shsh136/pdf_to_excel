@@ -1,9 +1,12 @@
-import streamlit as st
-import pandas as pd
-import time
 import re
+import time
+
 import numpy as np
-from itdepartment import getTabledownloadLink, displayPDF, pdfToText, cleanText, studentDetails, cleanMarks,getSubjectCodes,getSubjectNames
+import pandas as pd
+import streamlit as st
+from itdepartment import (cleanMarks, cleanText, displayPDF, getSubjectCodes,
+                          getSubjectNames, getTabledownloadLink, pdfToText,
+                          studentDetails)
 from st_aggrid import AgGrid
 from utils import PdfProcessor
 
@@ -91,25 +94,25 @@ def App():
             # store text to find subject names
             textForSubjectNames = text
             
-            subjectNamesList = []
-            # other departments than IT
-            if department !='IT':
-                st.info('Enter subject Names')
-                subjectNamesList = st.text_area(label="Enter subject Names(Each subject on separate line)")
-                subjectNamesListBtn = st.button(label='Add Subjects')
-                if subjectNamesListBtn and subjectNamesList:
-                    st.success('Selected subjects are')
+            # subjectNamesList = []
+            # # other departments than IT
+            # if department !='IT':
+            #     st.info('Enter subject Names')
+            #     subjectNamesList = st.text_area(label="Enter subject Names(Each subject on separate line)")
+            #     subjectNamesListBtn = st.button(label='Add Subjects')
+            #     if subjectNamesListBtn and subjectNamesList:
+            #         st.success('Selected subjects are')
 
-                    # convert string to list
-                    subjectNamesList = subjectNamesList.split('\n')
-                    st.write(subjectNamesList)
+            #         # convert string to list
+            #         subjectNamesList = subjectNamesList.split('\n')
+            #         st.write(subjectNamesList)
 
-                    # store the subjectNames in session state
-                    if 'subjectNamesList' not in st.session_state:
-                        st.session_state['subjectnamesList'] = subjectNamesList
+            #         # store the subjectNames in session state
+            #         if 'subjectNamesList' not in st.session_state:
+            #             st.session_state['subjectnamesList'] = subjectNamesList
 
-                else:
-                    st.error('Subject Name must be added to work.')
+            #     else:
+            #         st.error('Subject Name must be added to work.')
 
 
             text = cleanText(text)
@@ -135,107 +138,107 @@ def App():
             # hide progress bar after finish
             progressBar.empty()
 
-            with st.expander('Show Students Details'):
-                # remove columns with all nan values
-                student_data = student_data.dropna(axis=1, how='all')
-                storeStudentData = student_data.copy()
+            # with st.expander('Show Students Details'):
+            #     # remove columns with all nan values
+            #     student_data = student_data.dropna(axis=1, how='all')
+            #     storeStudentData = student_data.copy()
                 
-                AgGrid(student_data)
-                st.spinner('Processing...')
-                time.sleep(4)
-                st.text("")
+            #     AgGrid(student_data)
+            #     st.spinner('Processing...')
+            #     time.sleep(4)
+            #     st.text("")
 
-                downloadButtonAllCol1,downloadButtonAllCol2 = st.columns(2)
-                with downloadButtonAllCol1:
-                    st.download_button(
-                        'Download CSV File',
-                        data=storeStudentData.to_csv().encode('utf-8'),
-                        file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
-                        mime='text/csv'
-                    )
-                with downloadButtonAllCol2:
+            #     downloadButtonAllCol1,downloadButtonAllCol2 = st.columns(2)
+            #     with downloadButtonAllCol1:
+            #         st.download_button(
+            #             'Download CSV File',
+            #             data=storeStudentData.to_csv().encode('utf-8'),
+            #             file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
+            #             mime='text/csv'
+            #         )
+            #     with downloadButtonAllCol2:
                 
-                    st.markdown(getTabledownloadLink(
-                        df=storeStudentData,fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx",), unsafe_allow_html=True)
+            #         st.markdown(getTabledownloadLink(
+            #             df=storeStudentData,fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx",), unsafe_allow_html=True)
 
-            with st.expander('Show Students Marks by Subject Code'):
+            # with st.expander('Show Students Marks by Subject Code'):
 
-                # text = cleanTextRe(text)
-                subject_codes = st.text_input(
-                    'Enter subject code to see subject marks(One at at time)')
-                subject_codes_submit = st.button(
-                    'Submit', key='one_subject_codes_submit')
-                if subject_codes_submit:
-                    try:
-                        subject_codes = subject_codes.split()
-                        subject_codes = {i: None for i in subject_codes}
-                        st.markdown('#### Selected subjects')
-                        st.write(subject_codes)
-                        st.spinner('Processing...')
-                        pattern = r'[A-Z]{3}'
-                        text = cleanTextRe(text)
-                        text = re.sub(pattern, '', text)
-                        try:
-                            marks = cleanMarks(text, subject_codes)
-                        except Exception as e:
-                            st.error(
-                                f'Error in processing pdf. Please check the pdf file and try again {e}')
-                            return
+            #     # text = cleanTextRe(text)
+            #     subject_codes = st.text_input(
+            #         'Enter subject code to see subject marks(One at at time)')
+            #     subject_codes_submit = st.button(
+            #         'Submit', key='one_subject_codes_submit')
+            #     if subject_codes_submit:
+            #         try:
+            #             subject_codes = subject_codes.split()
+            #             subject_codes = {i: None for i in subject_codes}
+            #             st.markdown('#### Selected subjects')
+            #             st.write(subject_codes)
+            #             st.spinner('Processing...')
+            #             pattern = r'[A-Z]{3}'
+            #             text = cleanTextRe(text)
+            #             text = re.sub(pattern, '', text)
+            #             try:
+            #                 marks = cleanMarks(text, subject_codes)
+            #             except Exception as e:
+            #                 st.error(
+            #                     f'Error in processing pdf. Please check the pdf file and try again {e}')
+            #                 return
                         
-                        try:
-                            student_marks = concat_subjects(marks)
-                            student_marks = pd.concat(
-                                [student_data, student_marks], axis=1)
-                        except Exception as e:
-                            st.error(
-                                f'Error in extracting marks. Please check the pdf file and try again.@concat_subjects {e}')
-                            return
+            #             try:
+            #                 student_marks = concat_subjects(marks)
+            #                 student_marks = pd.concat(
+            #                     [student_data, student_marks], axis=1)
+            #             except Exception as e:
+            #                 st.error(
+            #                     f'Error in extracting marks. Please check the pdf file and try again.@concat_subjects {e}')
+            #                 return
 
 
-                        st.success('Done!....')
-                        # remove columns with all nan values
-                        # student_marks = replaceNan(student_marks)
-                        student_marks = student_marks.replace(
-                            'nnnnnnn', np.nan)
-                        student_marks = student_marks.replace(
-                            'nnnnnnn', np.nan)
-                        student_marks = student_marks.replace('nnn', np.nan)
-                        student_marks = student_marks.replace('nan', np.nan)
-                        student_marks = student_marks.replace('nnnn', np.nan)
+            #             st.success('Done!....')
+            #             # remove columns with all nan values
+            #             # student_marks = replaceNan(student_marks)
+            #             student_marks = student_marks.replace(
+            #                 'nnnnnnn', np.nan)
+            #             student_marks = student_marks.replace(
+            #                 'nnnnnnn', np.nan)
+            #             student_marks = student_marks.replace('nnn', np.nan)
+            #             student_marks = student_marks.replace('nan', np.nan)
+            #             student_marks = student_marks.replace('nnnn', np.nan)
 
-                        student_marks = student_marks.replace('nnn', np.nan)
-                        student_marks = student_marks.dropna(axis=1, how='all')
-                        studentMarksStore = student_marks.copy()
+            #             student_marks = student_marks.replace('nnn', np.nan)
+            #             student_marks = student_marks.dropna(axis=1, how='all')
+            #             studentMarksStore = student_marks.copy()
 
-                        AgGrid(student_marks)
+            #             AgGrid(student_marks)
                         
-                        st.spinner('Processing...')
-                        time.sleep(4)
-                        st.text("")
+            #             st.spinner('Processing...')
+            #             time.sleep(4)
+            #             st.text("")
 
-                        downloadButtonCol1,downloadButtonCol2 = st.columns(2)
-                        with downloadButtonCol1:
-                            st.download_button(
-                                'Download CSV File',
-                                data=studentMarksStore.to_csv().encode('utf-8'),
-                                file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
-                                mime='text/csv'
-                            )
-                        with downloadButtonCol2:
-                            st.markdown(getTabledownloadLink(
-                                df=studentMarksStore,fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx",), unsafe_allow_html=True)
+            #             downloadButtonCol1,downloadButtonCol2 = st.columns(2)
+            #             with downloadButtonCol1:
+            #                 st.download_button(
+            #                     'Download CSV File',
+            #                     data=studentMarksStore.to_csv().encode('utf-8'),
+            #                     file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
+            #                     mime='text/csv'
+            #                 )
+            #             with downloadButtonCol2:
+            #                 st.markdown(getTabledownloadLink(
+            #                     df=studentMarksStore,fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx",), unsafe_allow_html=True)
                             
                                         
-                    except Exception as e:
-                        st.error(f'Please enter valid subject code or cannot convert this marks {e}')
+            #         except Exception as e:
+            #             st.error(f'Please enter valid subject code or cannot convert this marks {e}')
                         
-                        return
+            #             return
 
             with st.expander('Download Student marks in Excel/Csv File'):
                 st.warning(
                     'Enter subject codes those are common for all student(Exclude honors courses)')
                 subject_codes = st.text_input(
-                    'Enter subject codes separated by space Example: 18IT101 18IT102')
+                    'Enter subject codes separated by space Example:  210241 210242')
                 subject_codes_submit = st.button(
                     'Submit', key='all_subject_codes_submit')
 
@@ -305,15 +308,16 @@ def App():
                         downloadButtonAllCol1,downloadButtonAllCol2 = st.columns(2)
                         with downloadButtonAllCol1:
                             st.download_button(
-                                'Download CSV File',
-                                data=student_marks.to_csv().encode('utf-8'),
-                                file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
-                                mime='text/csv'
+        'Download CSV File',
+        data=student_marks.to_csv().encode('utf-8'),
+        file_name=f"{str(pdf_file.name).split('.')[0]}.csv",
+        mime='text/csv',
+        key=f"download_csv_{pdf_file.name}"
                             )
                         with downloadButtonAllCol2:
                         
-                            st.markdown(getTabledownloadLink(
-                                df=student_marks,fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx",), unsafe_allow_html=True)
+                             st.markdown(getTabledownloadLink(
+        df=student_marks, fileName=f"{str(pdf_file.name).split('.')[0]}.xlsx"), unsafe_allow_html=True)
                             
                     except Exception as e:
                         st.error(
