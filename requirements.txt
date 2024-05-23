@@ -1,5 +1,5 @@
 numpy
-pypdf
 pandas>=1.0.0
 pypdf>=3.7.0
 streamlit>=1.0.0
+streamlit-aggrid
