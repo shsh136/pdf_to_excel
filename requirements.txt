@@ -1,6 +1,5 @@
 numpy
-pandas
-streamlit
-st_aggrid
 pypdf
-
+pandas>=1.0.0
+pypdf>=3.7.0
+streamlit>=1.0.0
