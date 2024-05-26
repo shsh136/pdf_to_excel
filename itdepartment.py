@@ -30,7 +30,7 @@ def getSubjectCodes(text: str,subjectCodeCount:int) -> list:
 def studentDetails(text: str):
     l = []
     pattern = re.findall(
-        r'[STB]\d{9}\s*\w*\s*\w*\s*\w*\s*\w*\w*\s*\w*\s*\w*\s*\w*\s*', text)
+        r'[FSTB]\d{9}\s*\w*\s*\w*\s*\w*\s*\w*\w*\s*\w*\s*\w*\s*\w*\s*', text)
     d = {'seat_no': [], 'name': []}
     for i in pattern:
         # split the string
