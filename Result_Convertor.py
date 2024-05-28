@@ -454,8 +454,8 @@ if __name__ == "__main__":
         with st.sidebar:
             st.header('Our Contributors')
             contributors = [
-            "Satya Prakash Raj",
-            "Shubhika Shree"
+            "SATYA PRAKASH RAJ",
+            "SHUBHIKA SHREE"
         ]
             for contributor in contributors:
                 st.write(contributor)
