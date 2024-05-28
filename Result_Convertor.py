@@ -454,11 +454,8 @@ if __name__ == "__main__":
         with st.sidebar:
             st.header('Our Contributors')
             contributors = [
-            "Alice Johnson",
-            "Bob Smith",
-            "Carol Davis",
-            "David Brown",
-            "Eve Wilson"
+            "Satya Prakash Raj",
+            "Shubhika Shree"
         ]
             for contributor in contributors:
                 st.write(contributor)
