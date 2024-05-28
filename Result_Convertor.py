@@ -4,10 +4,11 @@ import time
 import numpy as np
 import pandas as pd
 import streamlit as st
+from st_aggrid import AgGrid
+
 from itdepartment import (cleanMarks, cleanText, displayPDF, getSubjectCodes,
                           getSubjectNames, getTabledownloadLink, pdfToText,
                           studentDetails)
-from st_aggrid import AgGrid
 from utils import PdfProcessor
 
 
@@ -54,11 +55,19 @@ def replaceNan(df: pd.DataFrame) -> pd.DataFrame:
 
 def App():
 
-    st.markdown("""
-        ## :outbox_tray: Result Analyser :outbox_tray:
+   
 
-       
+    st.markdown("""
+    ## :outbox_tray: Result Analyser :outbox_tray:
+
+    ---
+
+    **Disclaimer:** Please ensure that you enter unique subject codes for accurate analysis. Duplicate subject codes may lead to incorrect results and data inconsistency. Each subject code should be distinct and identifiable to maintain the integrity of the analysis.
+
+    ---
+
     """, unsafe_allow_html=True)
+
 
                         
 
@@ -444,6 +453,18 @@ if __name__ == "__main__":
         )
         with st.sidebar:
             st.header('Our Contributors')
+            contributors = [
+            "Alice Johnson",
+            "Bob Smith",
+            "Carol Davis",
+            "David Brown",
+            "Eve Wilson"
+        ]
+            for contributor in contributors:
+                st.write(contributor)
+
+   
+        
 
             import streamlit as st
 
