@@ -451,7 +451,7 @@ if __name__ == "__main__":
             page_title='Result Analysis',
             page_icon='📃',
         )
-        # with st.sidebar:
+        with st.sidebar:
         #     st.header('Our Contributors')
         #     contributors = [
         #     "SATYA PRAKASH RAJ",
@@ -463,7 +463,7 @@ if __name__ == "__main__":
    
         
 
-            # import streamlit as st
+            import streamlit as st
 
             st.markdown(
                 """
