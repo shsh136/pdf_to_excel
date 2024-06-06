@@ -451,14 +451,14 @@ if __name__ == "__main__":
             page_title='Result Analysis',
             page_icon='📃',
         )
-        with st.sidebar:
-            st.header('Our Contributors')
-            contributors = [
-            "SATYA PRAKASH RAJ",
-            "SHUBHIKA SHREE"
-        ]
-            for contributor in contributors:
-                st.write(contributor)
+        # with st.sidebar:
+        #     st.header('Our Contributors')
+        #     contributors = [
+        #     "SATYA PRAKASH RAJ",
+        #     "SHUBHIKA SHREE"
+        # ]
+        #     for contributor in contributors:
+        #         st.write(contributor)
 
    
         
