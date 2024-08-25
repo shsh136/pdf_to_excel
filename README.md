@@ -10,7 +10,7 @@ This is a simple python script to convert the result of SPPU (Savitribai Phule P
 
 ## Usage
 1. Download the result from the SPPU website.
-2. Visit - [https://resultconvertor.streamlit.app/](https://pdf-to-excel2.streamlit.app/)
+2. Visit - https://pdf-to-excel2.streamlit.app/
 3. The result will be saved in the same directory as excel file.
 
 
